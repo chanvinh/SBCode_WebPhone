@@ -1,0 +1,41 @@
+﻿@model SBCode_WebPhone.ViewModels.DoiMatKhauVM
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+}
+
+<form asp-action="DoiMatKhau" id="register-form" style="margin-bottom:25px" class="auth-form">
+    <div class="auth-form__container">
+        <div class="auth-form__header">
+            <div class="auth-form__heading">Đổi Mật Khẩu</div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="auth-form__groups">
+            <div class="auth-form__group">
+                <label asp-for="MatKhauMoi" class="control-label"></label>
+                <input asp-for="MatKhauMoi" class="auth-form__input"
+                       placeholder="Mật Khẩu Mới" />
+                <span asp-validation-for="MatKhauMoi" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <label asp-for="NhapLaiMatKhauMoi" class="control-label"></label>
+                <input asp-for="NhapLaiMatKhauMoi" class="auth-form__input"
+                       placeholder="Nhập Lại Mật Khẩu Mới" />
+                <span asp-validation-for="NhapLaiMatKhauMoi" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <label asp-for="XacNhanMatKhauCu" class="control-label"></label>
+                <input asp-for="XacNhanMatKhauCu" class="auth-form__input" placeholder="Xác Nhận Mật Khẩu Cũ" />
+                <span asp-validation-for="XacNhanMatKhauCu" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <label class="control-label">@ViewBag.TrangThai</label>
+            </div>
+
+        </div>
+        <div class="auth-form__controls">
+            <button class="btn auth-form__controls-back">@Html.ActionLink("TRỞ LẠI", "Index", "HangHoa")</button>
+            <input type="submit" value="CẬP NHẬT" class="btn btn--primary" />
+        </div>
+    </div>
+</form>

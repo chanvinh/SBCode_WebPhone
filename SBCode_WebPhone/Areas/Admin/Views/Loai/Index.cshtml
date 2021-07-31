@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SBCode_WebPhone.Data.Loai>
+
+@{ ViewData["Title"] = "Danh sách Loại"; }
+
+<p>
+    <a class="btn btn-secondary" asp-action="Create"><i class="fas fa-plus"></i> Tạo mới</a>
+</p>
+<table id="datatablesSimple" class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                Tên Loại
+            </th>
+            <th>
+                Mô Tả
+            </th>
+            <th>
+                Mã Loại Cha
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+    <tr>
+ 
+    <td>
+        @Html.DisplayFor(modelItem => item.TenLoai)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MoTa)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LoaiCha.TenLoai)
+    </td>
+    <td>
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.MaLoai"><i class="fas fa-edit"></i> Sửa</a>
+        <a class="btn btn-success" asp-action="Delete" asp-route-id="@item.MaLoai"><i class="far fa-trash-alt"></i> Xóa</a>
+    </td>
+    </tr>}
+    </tbody>
+</table>

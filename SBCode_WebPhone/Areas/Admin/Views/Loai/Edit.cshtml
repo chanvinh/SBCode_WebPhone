@@ -1,0 +1,46 @@
+﻿@model SBCode_WebPhone.Data.Loai
+
+
+@{ 
+    ViewData["Title"] = "Edit"; 
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaLoai" />
+            <div class="form-group">
+                <label class="control-label">Tên Loại</label>
+                <input asp-for="TenLoai" class="form-control" />
+                <span asp-validation-for="TenLoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mô Tả</label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Mã Loại Cha</label>
+                @await Html.PartialAsync("LoaiDropDown", ViewBag.DanhSachLoaiCha as LoaiDropDownVM)
+                <span asp-validation-for="MaLoaiCha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $("#MaLoaiCha").val(@Model.MaLoai);
+        });
+    </script>
+}

@@ -1,0 +1,170 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+.category_flex {
+    display: flex;
+    width: 100%;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    i {
+        padding-top: 15px;
+    }
+    .category__heading {
+        padding-top: 4.5px;
+    }
+}
+
+.category-item {
+    &__link {
+        padding: 5px 10px;
+    }
+    &:last-child {
+        border-bottom: none !important;
+    }
+}
+
+
+.drop-right {
+    display: none;
+    position: absolute;
+    right: -206px;
+    background: white;
+    z-index: 999;
+    /* bottom: 0px; */
+    width: 205px;
+    border-radius: 5px;
+    top: -2px;
+    border: 1px solid #f5f5f5;
+    &-child {
+        padding: 5px 12px;
+        border-bottom: 1px solid #f5f5f5;
+        margin: 0px 5px;
+        &:last-child {
+            border-bottom: none !important;
+        }
+        .category-item-child {
+            position: relative;
+            font-size: 0.97rem;
+            color: rgba(0, 0, 0, 0.75);
+            font-weight: 500;
+            display: block;
+            width: 95%;
+            animation: right linear 0.1s;
+            right: 0;
+            &:hover {
+                right: -4px;
+            }
+        }
+    }
+}
+
+.drop {
+    position: relative;
+    &:hover {
+        .drop-right {
+            display: block;
+        }
+    }
+}
+
+.padding-carousel {
+    margin-top: 20px;
+    padding: 0px 70px;
+}
+
+.button-prev {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    background-color: white;
+    border: 1px solid transparent;
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0.54);
+    transition: transform 0.1s ease-out;
+    &:hover {
+        transform: translate(calc(-50% + 5px), -50%) scale(1.7);
+    }
+    i {
+        font-size: 0.625rem;
+        height: 100%;
+    }
+}
+
+.button-next {
+    position: absolute;
+    top: 50%;
+    border: 1px solid transparent;
+    right: 0px;
+    background-color: white;
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0.54);
+    transition: transform 0.1s ease-out;
+    &:hover {
+        transform: translate(calc(-50% + 5px), -50%) scale(1.7);
+    }
+    i {
+        font-size: 0.625rem;
+        height: 100%;
+    }
+}
+
+.item_5_flex {
+    display: flex;
+    width: 100%;
+    .item-1, .item-2, .item-3, .item-4 , .item-5 {
+        flex: 2.5;
+    }
+}

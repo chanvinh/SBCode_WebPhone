@@ -1,0 +1,237 @@
+﻿@model IEnumerable<SBCode_WebPhone.ViewModels.ChiTietDonHangVM>
+@using SBCode_WebPhone.ViewModels;
+@using SBCode_WebPhone.Helper
+@{
+    ViewData["Title"] = "DonHang";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+}
+
+@*<link href="~/css/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/css/owl.theme.default.min.css" rel="stylesheet" />*@
+
+<div class="grid wide" style="padding-bottom: 25px;">
+
+    <div class="cart-suggestion">
+        <i class="fas fa-truck-loading"></i>
+        <span>Hàng đặt sẽ được vận chuyển đến cho bạn trong vòng 1-3 ngày nhé!</span>
+    </div>
+    <!-- Cart product header -->
+    <div class="cart-page-product-header hide-on-mobile-tablet">
+        <span class="cart-page-product-header__product">
+            <i class="fas fa-cart-arrow-down"></i>
+            Sản Phẩm
+        </span>
+        <span class="cart-page-product-header__unit-price">Đơn Giá</span>
+        <span class="cart-page-product-header__qnt">Số Lượng</span>
+        <span class="cart-page-product-header__total-price">Số Tiền</span>
+        @*<span class="cart-page-product-header__action">Thao Tác</span>*@
+    </div>
+    <!-- Cart shop content-->
+    @foreach (var DonHang in ViewData["DonHang"] as IList<DonHangVM>)
+    {
+        <div class="cart-page-shop-container">
+            <div class="cart-page-shop__header">
+        
+                <div class="label-loving">Mã Đơn Hàng</div>
+                <span class="cart-page-shop__header-name"> @DonHang.MaDh</span>
+                <button class="cart-page-shop__header-btn-chat">
+                    <i class="cart-page-shop__header-icon fas fa-comment-alt"></i>
+                </button>
+                <div class="cart-bundle-header__logo">Ngày Đặt Hàng: @DonHang.NgayDat.ToString("dd/MM/yyyy hh:mm tt")</div>
+            </div>
+
+            <div class="cart-page-shop__container-items">
+                <div class="cart-bundle">
+                 
+                    @foreach (var item in Model)
+                    {
+                        if (item.MaDh == DonHang.MaDh)
+                        {
+                            <div class="cart-item-container">
+
+                                <div class="cart-item">
+
+                                    <div class="shop-checkbox shop-checkbox-sup">
+                                        @*<input class="shop-checkbox__input" type="checkbox">
+                                        <div class="shop-checkbox__bgc"></div>*@
+                                    </div>
+
+                                    <div class="cart-item__overview">
+                                        <a asp-action="Detail" asp-route-id="@item.MaHh" asp-controller="HangHoa" class="cart-item__overview-img-link">
+                                            <img class="cart-item__overview-img" src="~/Hinh/HangHoa/@item.Hinh">
+                                        </a>
+                                        <a asp-action="Detail" asp-route-id="@item.MaHh" asp-controller="HangHoa" class="cart-item__overview-name">@item.TenHh</a>
+                                    </div>
+
+                                    <div class="cart-item__variations">
+                                        <div class="cart-item__variation-label">
+                                            @*Phân loại hàng:
+                <button class="cart-item__variation-btn-arrow">
+                    <i class="cart-item__variation-icon-arrow-down fas fa-sort-down"></i>
+                </button>*@
+                                        </div>
+                                        <div class="cart-item__variation-model"></div>
+                                    </div>
+
+
+                                    <div class="cart-item__price">
+                                        <div class="cart-item__price-old"></div>
+                                        <div id="donGia" class="cart-item__price-current">@item.DonGia.ToVnd()</div>
+                                    </div>
+
+                                    <div class="shop__qnt-btns">
+
+                                        <input readonly class="soluong shop__qnt-input" value="@item.SoLuong">
+
+
+                                    </div>
+
+                                    <div id="thanhTien" class="cart-item__price-total-2">
+                                        @((item.SoLuong*item.DonGia).ToVnd())
+                                    </div>
+
+                                    @*<div class="cart-item__actions">
+            <a href="~/GioHang/RemoveCartItem/?id=@item.MaHangHoa" class="cart-item__action-remove">Xóa</a>
+            <button class="cart-item__action-search">
+                <span class="cart-item__action-search-title">Tìm sản phẩm tương tự</span>
+                <i class="cart-item__action-search-icon fas fa-sort-down"></i>
+            </button>
+        </div>*@
+
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="cart-item-container-mobile">
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Cart page footer -->
+        <div class="cart-page-footer">
+
+
+
+            <div class="cart-page-footer__row3">
+                <div class="cart-page-footer__actions">
+                    @*<div id="shop-checkbox-all" class="shop-checkbox">
+                        <input class="shop-checkbox__input" type="checkbox">
+                        <div class="shop-checkbox__bgc"></div>
+                    </div>*@
+                    <button class="cart-page-footer__actions-btn cart-page-footer__select-all clear-btn">
+                        Nguời Nhận: @DonHang.NguoiNhan
+                        <span class="hide-on-mobile-tablet">
+                            => <span class="qnt">Địa Chỉ Giao Hàng : @DonHang.DiaChiGiao </span>
+                        </span>
+                    </button>
+                    @*<button onclick="window.location.href = '/GioHang/RemoveCartItem'" class=" js-del-all cart-page-footer__actions-btn cart-page-footer__remove clear-btn hide-on-mobile-tablet">Xóa Tất Cả</button>
+                    <button class="cart-page-footer__actions-btn cart-page-footer__save clear-btn hide-on-mobile-tablet">Lưu vào mục Đã thích</button>*@
+                </div>
+
+                <div class="cart-page-footer__summary">
+                    <div class="cart-page-footer__summary-total">
+                        <div class="cart-page-footer__summary-total-text">
+                            Tổng tiền
+                            <span class="hide-on-mobile-tablet">(<span class="qnt">@Model.Where(p => p.MaDh == DonHang.MaDh).Count().ToString()</span> sản phẩm):</span>
+                        </div>
+                        <div class="cart-page-footer__summary-total-amount">@DonHang.TongTien.ToVnd()</div>
+                    </div>
+                    @*<div class="cart-page-footer__summary-bonus">Nhận 0 Xu</div>*@
+                </div>
+
+                @*<button onclick="window.location.href='/GioHang/ThanhToan'" class="cart-page-footer__checkout clear-btn">
+                    Mua Hàng
+                </button>*@
+            </div>
+        </div>
+
+
+        <!-- Confirm deletion -->
+        <!--<div class="confirm-deletion-container">
+            <div class="confirm-deletion-overlay"></div>
+            <div class="confirm-deletion">
+                <div class="confirm-deletion__message">
+                    Bạn có muốn xóa <span class="qnt">0</span> sản phẩm?
+                </div>
+                <div class="confirm-deletion__btn-wrapper">
+                    <button class="confirm-deletion__btn confirm-deletion__btn--back clear-btn">Trở lại</button>
+                    <button class="confirm-deletion__btn confirm-deletion__btn--agree clear-btn">Có</button>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- Empty cart -->
+
+    }
+    <!-- Cart carousel -->
+    @*<div class="cart-page-carousel">
+        <div class="cart-page-line"></div>
+        <div class="cart-page-carousel__items">
+            <div class="cart-page-carousel__title"></div>*@
+            @*<button class="cart-page-carousel__items-btn cart-page-carousel__items-btn--prev clear-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="cart-page-carousel__items-btn cart-page-carousel__items-btn--next clear-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>*@
+
+
+
+
+            @*<div class="cart-page-carousel-hidden">
+                <div class="cart-page-carousel-container owl-carousel">
+                    @foreach (var item in ViewData["ListHangHoa"] as IList<HangHoaVM>)
+                    {
+                        <div class="cart-page-carousel__item-wrapper">
+                            <a href="~/HangHoa/Detail/@item.MaHh" class="cart-page-carousel__item">
+
+                                <div class="cart-page-carousel__item-img-wrapper">
+                                    <img class="cart-page-carousel__item-img" src="~/Hinh/HangHoa/@item.Hinh">
+                                </div>
+
+                                <div class="product-favourite">Yêu thích</div>
+
+                                <div class="product-sale-off">
+                                    <span class="product-sale-off__percent">@item.GiamGia%</span>
+                                    <span class="product-sale-off__label">GIẢM</span>
+                                </div>
+
+                                <div class="cart-page-carousel__item-container">
+                                    <div class="cart-page-carousel__item-name">@item.TenHh</div>
+                                    <div class="cart-page-carousel__item-bottom">
+                                        <div class="cart-page-carousel__item-price">@item.GiaBan.ToVnd()</div>
+                                        <div class="cart-page-carousel__item-sold">@item.SoLuongBan đã bán</div>
+                                    </div>
+                                </div>
+
+                            </a>
+
+                        </div>
+                    }*@
+        @*</div>
+    </div>*@
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="~/js/owl.carousel.min.js"></script>
+<script src="~/js/main.js"></script>
+@*<script>
+        $(document).ready(function ())
+        {
+            $(".js-del-all").click(function (e) {
+                e.preventDefault();
+                var link = $(e.target);
+                (".confirm-deletion-container").confirm(
+                )
+            });
+        }
+    </script>*@
+

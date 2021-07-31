@@ -1,0 +1,64 @@
+﻿@model SBCode_WebPhone.ViewModels.DangNhapVM
+@{
+    ViewData["Title"] = "DangNhap";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+}
+
+<form asp-action="DangNhap" id="login-form" style="margin-bottom:25px" class="auth-form" asp-route-ReturnUrl="@ViewBag.ReturnUrl"  >
+    <div class="auth-form__container">
+        <div class="auth-form__header">
+            <div class="auth-form__heading">Đăng nhập</div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="text-danger">@ViewBag.ThongBaoLoi</div>
+        <div class="auth-form__groups">
+            <div class="auth-form__group">
+                <input asp-for="Email" id="email" rule="email" type="text" class="auth-form__input"
+                       placeholder="Email của bạn" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <input asp-for="MatKhau" id="password" rule="password" type="password" class="auth-form__input"
+                       placeholder="Mật khẩu của bạn" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+
+            </div>
+        </div>
+
+        <div class="auth-form__aside">
+            <div class="auth-form__help">
+                <a href="" class="auth-form__help-link auth-form__help-forgot">Quên mật khẩu</a>
+                <span class="auth-form__help-separate"></span>
+                <a href="" class="auth-form__help-link">Cần trợ giúp?</a>
+            </div>
+        </div>
+
+        <div class="auth-form__controls">
+            <button class="btn auth-form__controls-back">@Html.ActionLink("TRỞ LẠI", "Index", "HangHoa")</button>
+            <button type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
+        </div>
+
+        <div class="auth-form__switch-wrapper">
+            <span class="auth-form__switch-text">Bạn chưa có tài khoản?</span>
+            <span class="auth-form__switch-btn">@Html.ActionLink("Đăng Ký", "DangKy", "Account")</span>
+        </div>
+    </div>
+
+
+    <div class="auth-form__socials">
+        <a href="" class="auth-form__socials--facebook btn btn--size-s btn--with-icon">
+            <i class="auth-form__socials-icon fab fa-facebook-square"></i>
+            <span class="auth-form__socials-title">
+                Kết nối với Facebook
+            </span>
+        </a>
+        <a href="" class="auth-form__socials--google btn btn--size-s btn--with-icon">
+            <i class="auth-form__socials-icon fab fa-google"></i>
+            <span class="auth-form__socials-title">
+                Kết nối với Google
+            </span>
+        </a>
+    </div>
+</form>
+
+

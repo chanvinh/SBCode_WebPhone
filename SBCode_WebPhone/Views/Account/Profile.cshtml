@@ -1,0 +1,44 @@
+﻿@model SBCode_WebPhone.ViewModels.DangKyVM
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+}
+
+<form asp-action="Profile" id="register-form" style="margin-bottom:25px" class="auth-form">
+    <div class="auth-form__container">
+        <div class="auth-form__header">
+            <div class="auth-form__heading">THÔNG TIN CÁ NHÂN</div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="auth-form__groups">
+            <div class="auth-form__group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="auth-form__input"
+                       placeholder="Email của bạn" readonly />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <label asp-for="HoTen" class="control-label"></label>
+                <input asp-for="HoTen" class="auth-form__input" placeholder="Họ và Tên" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
+            </div>
+            <div class="auth-form__group">
+                <label asp-for="SoDienThoai" class="control-label"></label>
+                <input asp-for="SoDienThoai"
+                       class="auth-form__input" placeholder="Số Điện Thoại" />
+                <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+            </div>
+
+            <div class="auth-form__group">
+                <label asp-for="DiaChi" class="control-label"></label>
+                <input asp-for="DiaChi"
+                       class="auth-form__input" placeholder="Địa Chỉ" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="auth-form__controls">
+            <button class="btn auth-form__controls-back">@Html.ActionLink("TRỞ LẠI", "Index", "HangHoa")</button>
+            <input type="submit" value="CẬP NHẬT" class="btn btn--primary" />
+        </div>
+    </div>
+</form>

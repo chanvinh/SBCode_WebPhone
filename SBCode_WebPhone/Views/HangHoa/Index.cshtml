@@ -1,0 +1,339 @@
+﻿@using SBCode_WebPhone.ViewModels;
+@using SBCode_WebPhone.Data;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<HangHoaVM>
+@using SBCode_WebPhone.Helper
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+}
+
+<div class="col l-2 m-0 c-0">
+    <div class="category-pc">
+        <nav class="category">
+            <div class="category__heading-wrapper">
+                <div class="category_flex">
+                    <i class="category__heading-icon fas fa-list"></i>
+                    <div class="category__heading">Danh Mục</div>
+                </div>
+                <ul class="category-list">
+                    @if (ViewBag.mucloaihientai == null)
+                    {
+                        <li class="category-item category-item--active">
+                            <a href="#" class="category-item__link">Tất Cả Sản Phẩm</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="category-item ">
+                            <a href="/HangHoa/Index"  class="category-item__link">Tất Cả Sản Phẩm</a>
+                        </li>
+                    }
+                    @{
+
+                        var loai = (ViewData["dsLoai"] as IList<Loai>).Where(l => l.MaLoaiCha == null);
+
+                    }
+                   
+                        @foreach (var lv1 in loai)
+                        {
+                            var loaiCha = ViewBag.mucloaihientai;
+                            var loai2 = (ViewData["dsLoai"] as IList<Loai>).Where(l => l.MaLoaiCha == lv1.MaLoai);
+                            if (ViewBag.mucloaihientai != null)
+                            {loaiCha = (ViewData["dsLoai"] as IList<Loai>).FirstOrDefault(c => c.MaLoai == ViewBag.mucloaihientai).MaLoaiCha; }
+
+                            if (lv1.MaLoai == ViewBag.mucloaihientai || lv1.MaLoai == loaiCha)
+                            {
+                            <li class="category-item drop category-item--active ">
+                                <a href="/HangHoa/Index/?mucloai=@lv1.MaLoai"  class="category-item__link">@lv1.TenLoai</a>
+                                <ul class="drop-right">
+                                    @foreach (var lv2 in loai2)
+                                    {
+                                        {
+                                            if (lv2.MaLoai == ViewBag.mucloaihientai)
+                                            {
+                                                <li class="category-item drop category-item--active">
+                                                    <a href="/HangHoa/Index/?mucloai=@lv2.MaLoai" class="category-item__link">@lv2.TenLoai</a>
+                                                </li>
+
+                                            }
+                                            else
+                                            {
+                                                <li class="drop-right-child">
+                                                    <a href="/HangHoa/Index/?mucloai=@lv2.MaLoai" class="category-item-child">@lv2.TenLoai</a>
+                                                </li>
+                                            }
+
+                                        }
+
+
+                                    }
+                                </ul>
+                            </li>
+
+                            }
+                            else
+                            {
+                            <li class="category-item drop">
+                                <a href="/HangHoa/Index/?mucloai=@lv1.MaLoai"  class="category-item__link">@lv1.TenLoai</a>
+                                <ul class="drop-right">
+                                    @foreach (var lv2 in loai2)
+                                    {
+                                        { 
+                                            <li class="drop-right-child">
+                                                <a href="/HangHoa/Index/?mucloai=@lv2.MaLoai" class="category-item-child">@lv2.TenLoai</a>
+                                            </li>
+
+                                        }
+
+
+                                    }
+                                </ul>
+                            </li>
+
+                            }
+                        
+                    }
+
+          
+
+
+                </ul>
+            </div>
+
+            <!-- Content category items -->
+            
+
+        </nav>
+    </div>
+</div>
+
+<div class="col l-10 m-12 c-12">
+    <div class="home-filter hide-on-mobile-tablet">
+        <span class="home-filter__label">Sắp xếp theo</span>
+
+        @Html.ActionLink("Phổ Biến", "Index", "HangHoa", new { mucloai = ViewBag.mucloaihientai, sapxep = 1, pagesize = Model.PageSize }, new { @class = (ViewBag.sapxep == 1 ? "home-filter__btn btn btn--primary" : "home-filter__btn btn") })
+        @Html.ActionLink("Mới Nhất", "Index", "HangHoa", new { mucloai = ViewBag.mucloaihientai, sapxep = 2, pagesize = Model.PageSize }, new { @class = (ViewBag.sapxep != 1 && ViewBag.sapxep != 3 ? "home-filter__btn btn btn--primary" : "home-filter__btn btn") })
+        @Html.ActionLink("Bán Chạy", "Index", "HangHoa", new { mucloai = ViewBag.mucloaihientai, sapxep = 3, pagesize = Model.PageSize }, new { @class = (ViewBag.sapxep == 3 ? "home-filter__btn btn btn--primary" : "home-filter__btn btn") })
+
+
+        <div class="select-input">
+            <span class="select-input__label">
+                @if (ViewBag.sapxep == 0)
+                {<span>Giá: Thấp đến cao</span> }
+                else if (ViewBag.sapxep == -1)
+                { <span>Giá: Cao đến thấp</span>}
+                else
+                {<span>Giá</span>}
+            </span>
+            <i class="select-input__icon fas fa-angle-down"></i>
+
+            <!-- List option -->
+            <ul class="select-input__list">
+                <li class="select-input__item">
+                    @Html.ActionLink("Giá: Thấp đến cao", "Index", "HangHoa", new { mucloai = ViewBag.mucloaihientai, sapxep = 0, pagesize = Model.PageSize })
+                </li>
+                <li class="select-input__item">
+                    @Html.ActionLink("Giá: Cao đến thấp", "Index", "HangHoa", new { mucloai = ViewBag.mucloaihientai, sapxep = -1, pagesize = Model.PageSize })
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div class="home-filter__page">
+            <span class="home-filter__page-num">
+                <span class="home-filter__page-current">@Model.PageNumber</span>/@Model.PageCount
+            </span>
+
+
+            <div class="home-filter__page-control">
+                <a href="@giam()" class="@chantrai()">
+                    <i class="home-filter__page-icon fas fa-angle-left"></i>
+                </a>
+                <a href="@tang()" class="@chanphai()">
+                    <i class="home-filter__page-icon fas fa-angle-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="mobile-category">
+        <ul class="mobile-category__list">
+            @*<li class="mobile-category__item">
+            <a href="" class="mobile-category__link">Điện Thoại Di Động</a>
+        </li>
+        <li class="mobile-category__item">
+            <a href="" class="mobile-category__link">TableLap</a>
+        </li>
+        <li class="mobile-category__item">
+            <a href="" class="mobile-category__link">Máy Tính Để Bàn</a>
+        </li>
+        <li class="mobile-category__item">
+            <a href="" class="mobile-category__link">LapTop</a>
+        </li>
+
+        <li class="mobile-category__item">
+            <a href="" class="mobile-category__link">Phụ Kiện Điện Thoại</a>
+        </li>
+        <li class="mobile-category__item">
+            <a href="" class="mobile-category__link">Phụ Kiện Máy Tính</a>
+        </li>*@
+
+            @{
+
+                var loaimoblie = (ViewData["dsLoai"] as IList<Loai>).Where(l => l.MaLoaiCha == null);
+
+            }
+
+            @foreach (var lv1 in loaimoblie)
+            {
+                var loaiCha = ViewBag.mucloaihientai;
+                var loai2 = (ViewData["dsLoai"] as IList<Loai>).Where(l => l.MaLoaiCha == lv1.MaLoai);
+                if (ViewBag.mucloaihientai != null)
+                { loaiCha = (ViewData["dsLoai"] as IList<Loai>).FirstOrDefault(c => c.MaLoai == ViewBag.mucloaihientai).MaLoaiCha; }
+
+            
+
+                @foreach (var lv2 in loai2)
+                {
+                    <li class="mobile-category__item">
+
+                        <a href="/HangHoa/Index/?mucloai=@lv2.MaLoai" class="mobile-category__link">@lv2.TenLoai</a>
+
+
+                    </li>
+                   
+                  }
+
+                }
+
+            </ul>
+    </nav>
+
+
+    <div class="home-product">
+        <div class="row sm-gutter">
+            @foreach (var item in Model)
+            {
+
+
+                <div class="col l-2-4 m-4 c-6">
+                    <a title="" asp-controller="HangHoa" asp-action="Detail" asp-route-id="@item.MaHh" class="home-product-item">
+                        <div>
+                            <img src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh" class="home-product-item__img">
+                        </div>
+                        <div class="home-product-item__name">@item.TenHh</div>
+                        <div class="home-product-item__price">
+                            <span class="home-product-item__price-old">@item.DonGia.ToVnd()</span>
+                            <span class="home-product-item__price-current">@item.GiaBan.ToVnd()</span>
+                        </div>
+                        <div class="home-product-item__action">
+                            <span class="home-product-item__like home-product-item__like--liked">
+                                <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                                <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                            </span>
+                            <div class="home-product-item__rating">
+                                <i class="home-product-item__star--gold fas fa-star"></i>
+                                <i class="home-product-item__star--gold fas fa-star"></i>
+                                <i class="home-product-item__star--gold fas fa-star"></i>
+                                <i class="home-product-item__star--gold fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="home-product-item__sold">@item.SoLuongBan đã bán</span>
+                        </div>
+                        <div class="home-product-item__origin">
+                            <span class="home-product-item__brand">@item.ThuongHieu</span>
+                            <span class="home-product-item__origin-name">@item.XuatXu</span>
+                        </div>
+                        <div class="product-favourite">
+                            <i class="fas fa-check"></i>
+                            <span>Yêu thích</span>
+                        </div>
+                        <div class="product-sale-off">
+                            <span class="product-sale-off__percent">@item.GiamGia%</span>
+                            <span class="product-sale-off__label">GIẢM</span>
+                        </div>
+                    </a>
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+    <ul class="pagination home-product__pagination">
+        <li class="pagination-item">
+            <a href="@giam()" class="pagination-item__link">
+                <i class="pagination-item__icon fas fa-angle-left"></i>
+
+            </a>
+        </li>
+
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <li class="pagination-item pagination-item--active">
+                    <a href="/HangHoa/Index/?mucloai=@ViewBag.mucloaihientai&page=@i&sapxep=@ViewBag.sapxep" class="pagination-item__link">@i</a>
+                </li>
+            }
+            else
+            {
+                <li class="pagination-item">
+                    <a href="/HangHoa/Index/?mucloai=@ViewBag.mucloaihientai&page=@i&sapxep=@ViewBag.sapxep" class="pagination-item__link">@i</a>
+                </li>
+            }
+
+        }
+
+        <li class="pagination-item">
+            <a href="@tang()" class="pagination-item__link">
+                <i class="pagination-item__icon fas fa-angle-right"></i>
+            </a>
+        </li>
+
+        <li class="pagination-item">     </li>
+    </ul>
+
+</div>
+
+@{
+            string giam()
+            {
+                @if (Model.PageNumber > 1)
+                { return "/HangHoa/Index/?mucloai=" + @ViewBag.mucloaihientai + "&page=" + (Model.PageNumber - 1) + "&sapxep=" + ViewBag.sapxep; }
+
+        else
+                { return "/HangHoa/Index/?mucloai=" + @ViewBag.mucloaihientai + "&page=1" + "&sapxep=" + ViewBag.sapxep; }
+            }
+            string tang()
+            {
+                @if (Model.PageNumber >= Model.PageCount)
+                { return "/HangHoa/Index/?mucloai=" + @ViewBag.mucloaihientai + "&page=" + Model.PageNumber + "&sapxep=" + ViewBag.sapxep; }
+
+        else
+                { return "/HangHoa/Index/?mucloai=" + @ViewBag.mucloaihientai + "&page=" + (Model.PageNumber + 1) + "&sapxep=" + ViewBag.sapxep; }
+            }
+            string chantrai()
+            {
+                @if (Model.PageNumber <= 1)
+                {
+                    return "home-filter__page-btn home-filter__page-btn--disabled";
+                }
+                return "home-filter__page-btn";
+            }
+            string chanphai()
+            {
+                @if (Model.PageNumber >= Model.PageCount)
+                {
+                    return "home-filter__page-btn home-filter__page-btn--disabled";
+                }
+                return "home-filter__page-btn";
+            }
+
+        }
+
+@*Trang @(Model.PageCount<Model.PageCount?1:Model.PageNumber)/@Model.PageCount*@
+@*@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))*@

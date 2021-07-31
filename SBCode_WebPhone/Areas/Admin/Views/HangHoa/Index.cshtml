@@ -1,0 +1,67 @@
+﻿@model IEnumerable<SBCode_WebPhone.Data.HangHoa>
+
+@{ ViewData["Title"] = "Quản lý Hàng hóa"; }
+
+<p>
+    <a class="btn btn-secondary" asp-action="Create"><i class="fas fa-plus"></i> Tạo mới</a>
+</p>
+<table id="datatablesSimple" class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên Hàng Hóa
+            </th>
+            <th>
+                Đơn Giá
+            </th>
+            <th>
+                Giảm giá
+            </th>
+            <th>
+                Số Lượng
+            </th>
+            <th>
+                Hình
+            </th>
+            <th>
+                Mô Tả
+            </th>
+            <th>
+                Loại
+            </th>
+            <th>Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.TenHh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DonGia)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.GiamGia)%
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.SoLuong)
+    </td>
+    <td class="item-sanpham">
+        <img class="img-fluid" src="~/Hinh/HangHoa/@item.Hinh" height="85"/>
+    </td>
+    <td>
+        @item.MoTa
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Loai.TenLoai)
+    </td>
+    <td class="item-a-sanpham">
+        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.MaHangHoa"><i class="fas fa-edit"></i> Sửa</a>
+        @*<a class="btn btn-danger" asp-action="Details" asp-route-id="@item.MaHangHoa"><i class="fas fa-eye"></i> Xem</a>*@
+        <a class="btn btn-success" asp-action="Delete" asp-route-id="@item.MaHangHoa"><i class="far fa-trash-alt"></i> Xóa</a>
+    </td>
+</tr>}
+    </tbody>
+</table>

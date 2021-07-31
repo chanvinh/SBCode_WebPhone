@@ -1,0 +1,65 @@
+﻿
+@if (User.Identity.IsAuthenticated)
+{
+    
+
+    using (Html.BeginForm("DangXuat", "Account", FormMethod.Post, new { id = "login-form", @class = "header__navbar-list" }))
+    {
+    @Html.AntiForgeryToken()
+
+        @*<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    @User.Identity.GetUserName()
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="@Url.Action("Attending","Courses")">Course I'm Going'</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Mine","Courses")">Mine</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Log</a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+
+        <li class="header__navbar-item header__navbar-user">
+            @*<img src="~/Images/hehe.png" class="header__navbar-user-img" />*@
+            <span class="header__navbar-user-name">@User.Identity.Name</span>
+
+            <ul class="header__navbar-user-menu">
+                <li class="header__navbar-user-item">
+                    <a href="@Url.Action("Profile","Account")">Tài khoản của tôi</a>
+                </li>
+                <li class="header__navbar-user-item">
+                    <a href="@Url.Action("DoiMatKhau","Account")">Đổi mật khẩu</a>
+                </li>
+                <li class="header__navbar-user-item">
+                    <a href="@Url.Action("DonHangDaMua","Account")">Đơn mua</a>
+                </li>
+                <li class="header__navbar-user-item header__navbar-user-item--separate">
+                    <a href="javascript:document.getElementById('login-form').submit()">Đăng xuất</a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+    }
+    }
+    else
+    {
+   
+        <li id="register-item" class="header__navbar-item header__navbar-item-separate">
+            <a class="account" asp-action="DangNhap" asp-controller="Account">Đăng Nhập</a>
+        </li>
+        <li id="login-item" class="header__navbar-item">
+            <a class="account" asp-action="DangKy" asp-controller="Account">Đăng Ký</a>
+        </li>
+   
+    }

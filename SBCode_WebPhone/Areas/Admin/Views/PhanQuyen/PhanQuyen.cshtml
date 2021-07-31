@@ -1,0 +1,73 @@
+﻿@model IEnumerable<SBCode_WebPhone.ViewModels.PhanQuyenVM>
+
+@{ ViewData["Title"] = "Phân Quyền";
+    }
+
+<form asp-action="UpdatePhanQuyen">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaKh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HoTen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QuanTri)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BanHang)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ThuKho)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.KhachHang)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+<tr>
+    <td class="center_td">
+        @Html.DisplayFor(modelItem => item.MaKh)
+        <input type="hidden" value="@item.MaKh" name="MaKh" />
+    </td>
+    <td class="center_td">
+        @Html.DisplayFor(modelItem => item.HoTen)
+    </td>
+    <td class="center_td">
+        <input class="check-role-item" @(item.QuanTri ? "checked" : "") type="checkbox" />
+        <input name="QuanTri" value="@(item.QuanTri ? "true" : "false")" type="hidden" />
+    </td>
+    <td class="center_td">
+        <input class="check-role-item" @(item.BanHang ? "checked" : "") type="checkbox" />
+        <input name="BanHang" value="@(item.BanHang ? "true" : "false")" type="hidden" />
+    </td>
+    <td class="center_td">
+        <input class="check-role-item" @(item.ThuKho ? "checked" : "") type="checkbox" />
+        <input name="ThuKho" value="@(item.ThuKho ? "true" : "false")" type="hidden" />
+    </td>
+    <td class="center_td">
+        <input class="check-role-item" @(item.KhachHang ? "checked" : "") type="checkbox" />
+        <input name="KhachHang" value="@(item.KhachHang ? "true" : "false")" type="hidden" />
+    </td>
+</tr>            }
+        </tbody>
+    </table>
+     <input type="submit" name="update_PQ"  class="btn btn-success" value="Cập Nhập" />
+</form>
+@section Scripts{
+    <script>$(document).ready(function () {
+        $(".check-role-item").click(function () {
+            if ($(this).is(":checked")) {
+                $(this).next().val("true");
+            }
+            else {
+                $(this).next().val("false");
+            }
+        });
+    });</script>
+}

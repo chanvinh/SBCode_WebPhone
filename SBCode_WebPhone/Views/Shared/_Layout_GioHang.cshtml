@@ -1,0 +1,68 @@
+﻿@using SBCode_WebPhone.Helper
+@using SBCode_WebPhone.ViewModels
+@{ 
+
+    var gioHang = Context.Session.Get<List<GioHangVM>>("GioHang");
+    if (gioHang == null)
+    {
+        gioHang = new List<GioHangVM>();
+    }
+}
+<div class="header__cart hide-on-mobile-tablet">
+    <div class="header__cart-wrap">
+        <i class="header__cart-icon fas fa-shopping-cart"></i>
+        <span class="header__cart-wrap-notice">@gioHang.Sum(p => p.SoLuong)</span>
+
+        <!-- No cart: Header__cart-list--no-cart -->
+
+        <div class="header__cart-list header__cart-list--no-cart">
+            @if (gioHang.Count == 0)
+            {
+                <img src="~/images/no-cart.png" class="header__cart-no-card-img" />
+                <span class="header__cart-list-no-card-msg">
+                    Chưa có sản phẩm
+                </span>
+            }
+            else
+            {
+                <div class="header__cart-heading">Sản phẩm đã thêm</div>
+
+                <!-- Cart item -->
+                @foreach (var item in gioHang)
+                {
+                        <a asp-action="Detail" asp-route-id="@item.MaHangHoa" asp-controller="HangHoa"> <ul  class="header__cart-list-item">
+                                <li class="header__cart-item">
+                                    <div class="header__cart-img-wrapper">
+                                        <a asp-action="Detail" asp-route-id="@item.MaHangHoa" asp-controller="HangHoa"><img  src="~/Hinh/HangHoa/@item.Hinh"
+                                             class="header__cart-img"></a>
+                                    </div>
+                                        <a asp-action="Detail" asp-route-id="@item.MaHangHoa" asp-controller="HangHoa">  <div  class="header__cart-item-info">
+                                        <div class="header__cart-item-head">
+                                            <div class="header__cart-item-name">
+                                                @item.TenHh
+                                            </div>
+                                            <div class="header__cart-item-price-wrap">
+                                                <span class="header__cart-item-price">@item.GiaBan.ToVnd()</span>
+                                                <span class="header__cart-item-multiply">x</span>
+                                                <span class="header__cart-item-qnt">@item.SoLuong</span>
+                                            </div>
+                                        </div>
+                                        <div class="header__cart-item-body">
+                                            <span class="header__cart-item-description">
+
+                                            </span>
+                                            <span class="header__cart-item-remove">@Html.ActionLink("Xóa", "RemoveCartItem", "GioHang", new { id = item.MaHangHoa })</span>
+                                        </div>
+                                    </div>
+                                    </a>
+                                </li>
+                            </ul>
+                          </a>
+                 }
+
+
+                    <button class="header__cart-view-cart btn btn--primary" onClick="location.href='/GioHang'">Xem giỏ hàng</button>
+                }
+            </div>
+    </div>
+</div>

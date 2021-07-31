@@ -1,0 +1,596 @@
+﻿@using SBCode_WebPhone.ViewModels;
+@using Microsoft.AspNetCore.Identity;
+@using SBCode_WebPhone.Data;
+@using SBCode_WebPhone.Helper;
+@model SBCode_WebPhone.Data.HangHoa;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout_Shop.cshtml";
+    var hostName = $"{Context.Request.Scheme}://{Context.Request.Host}";
+}
+@section SocialSeo{
+    <meta property="og:title" content="@Model.TenHh" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@hostName@Context.Request.Path" />
+    <meta property="og:image" content="@hostName/Hinh/HangHoa/@Model.Hinh" />
+}
+<div id="product-info-container">
+    <div class="grid wide">
+        <!-- Product slide & content -->
+        <div class="row sm-gutter product">
+            <div class="col l-5 c-12">
+                <div class="product-slide">
+                    <img src="~/Hinh/HangHoa/@Model.Hinh"
+                         class="product__img">
+                    <div class="product__cards product__cards-mobile">
+                        <button class="product__cards-btn product__cards-btn--prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="product__cards-btn product__cards-btn--next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+
+                        <div class="product__cards-container">
+                            <div class="product__card-wrapper">
+                                <div class="product__card">
+                                    <img src="~/Hinh/HangHoa/@Model.Hinh"
+                                         class="product__card-img">
+                                </div>
+                            </div>
+                            <div class="product__card-wrapper">
+                                <div class="product__card">
+                                    <img src="~/Hinh/HangHoa/@Model.Hinh"
+                                         class="product__card-img">
+                                </div>
+                            </div>
+                            <div class="product__card-wrapper">
+                                <div class="product__card">
+                                    <img src="~/Hinh/HangHoa/@Model.Hinh"
+                                         class="product__card-img">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="product__actions hide-on-mobile-tablet">
+                        <div class="product__sharing-icons hide-on-mobile-tablet">
+                            <div class="text">Chia sẻ:</div>
+                            <a href="#" class="product__action-icon messenger">
+                                <i class="fab fa-facebook-messenger"></i>
+                            </a>
+
+                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v11.0" nonce="2iZDGljv"></script>
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Fucv0411%2F&amp;src=sdkpreparse" class="product__action-icon facebook"><i class="fab fa-facebook"></i></a>
+
+                            <a href="#" class="product__action-icon google">
+                                <i class="fab fa-google-plus"></i>
+                            </a>
+                            <a href="#" class="product__action-icon pinterest">
+                                <i class="fab fa-pinterest"></i>
+                            </a>
+                            <a href="#" class="product__action-icon twitter">
+                                <i class="fab fa-twitter-square"></i>
+                            </a>
+                        </div>
+                        <div class="product__liking">
+                            <i class="product__action-icon product__action-icon--liking far fa-heart"></i>
+                            <a class="text">Đã thích (2,1k)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col l-7 c-12">
+                <div class="product-content">
+                    <div class="product__title">
+                        <div class="label-loving">
+                            Yêu Thích
+                        </div>
+                        <span>@Model.TenHh</span>
+                    </div>
+
+                    <div class="product__status">
+                        <div class="product__status-rating">
+                            <div class="product__status-rating-point underscore">4.9</div>
+                            <div class="product__status-rating-stars">
+                                <i class="product__status-rating-star fas fa-star"></i>
+                                <i class="product__status-rating-star fas fa-star"></i>
+                                <i class="product__status-rating-star fas fa-star"></i>
+                                <i class="product__status-rating-star fas fa-star"></i>
+                                <i class="product__status-rating-star fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product__status-reviewing hide-on-mobile">
+                            <span class="product__status-reviewing-qnt underscore">78</span>
+                            <span class="product__status-text pr-text">Đánh Giá</span>
+                        </div>
+                        <div class="product__status-sold">
+                            <span class="product__status-sold-qnt">@Model.SoluongBan</span>
+                            <span class="product__status-text pr-text">Đã Bán</span>
+                        </div>
+                        <div class="product__liking">
+                            <i class="product__action-icon product__action-icon--liking far fa-heart"></i>
+                            <a class="text hide-on-mobile">Đã thích (2,1k)</a>
+                        </div>
+                    </div>
+
+                    <div class="product__price">
+                        <div class="product__price-main">
+                            <span class="product__price-old">@Model.DonGia.ToVnd()</span>
+                            <div class="product__price-current">
+                                <span class="product__price-new">@((Model.DonGia * (100 - Model.GiamGia) / 100.0).ToVnd())</span>
+                                <span class="product__price-label bgr-orange">GIẢM @Model.GiamGia %</span>
+                            </div>
+                        </div>
+                        <div class="product__price-slogan hide-on-mobile-tablet">
+                            <i class="product__price-icon-tag fas fa-tags"></i>
+                            <span class="product__price-slogan-text">
+                                Ở đâu rẻ hơn, SBCode-Shop hoàn
+                                tiền
+                            </span>
+                            <i class="product__price-icon-question far fa-question-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="product__info">
+
+                        <div class="product__shipping">
+                            <label class="product__shipping-label width-label">Vận Chuyển</label>
+                            <div class="product__shipping-wrapper">
+                                <div class="product__shipping-free">
+                                    <div class="product__shipping-free-icon-wrapper">
+                                        <i class="product__shipping-free-icon fas fa-truck-loading"></i>
+                                    </div>
+                                    <div class="product__shipping-free-wrapper">
+                                        <div class="product__shipping-free-title">Miễn Phí Vận Chuyển</div>
+                                        <div class="product__shipping-free-note">
+                                            Miễn Phí Vận Chuyển khi đơn đạt
+                                            giá trị tối thiểu
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product__shipping-to">
+                                    <i class="product__shipping-to-icon-truck fas fa-truck"></i>
+                                    <div class="product__shipping-to-wrapper">
+                                        <div class="product__shipping-to-destination">
+                                            <label class="product__shipping-to-label">Vận Chuyển Tới</label>
+                                            <div class="product__shipping-to-cities">
+                                                <span class="product__shipping-to-city">@ViewBag.getdiachi</span>
+                                                <i class="product__shipping-to-icon fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="product__shipping-to-fee">
+                                            <label class="product__shipping-to-label">Phí Vận Chuyển</label>
+                                            <div class="product__shipping-to-fee-wrapper">
+                                                <div class="product__shipping-to-fees">99.000đ</div>
+                                                <i class="product__shipping-to-icon fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="product__options">
+                                <label class="product__options-label width-label">Chọn loại hàng</label>
+                                <div class="product__options-items-wrapper">
+                                    <div class="product__options-items">
+
+                                    </div>
+                                    <div class="product__options-items-error-message">
+                                        Vui lòng chọn Phân loại hàng
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<script>
+                                function Tang() {
+                                    var result = document.getElementById('soluong'); var soluong = result.value; if (!isNaN(soluong) && soluong < @Model.SoLuong) result.value++; return false;
+                                }
+                                function Giam() {
+                                    var result = document.getElementById('soluong'); var soluong = result.value; if( !isNaN( soluong ) && soluong > 1 ) result.value--;return false;
+                                }
+                            </script>*@
+                        <form asp-controller="GioHang" asp-action="ThemVaoGio" asp-route-id="@Model.MaHangHoa" method="post">
+                            <div class="product__qnt hide-on-mobile">
+                                <label class="product__qnt-label width-label">Số Lượng</label>
+                                <div class="shop__qnt-btns">
+                                    <button onClick="var result = document.getElementById('soluong'); var soluong = result.value; if( !isNaN( soluong ) && soluong > 1 ) result.value--;return false;" class="shop__qnt-btn shop__qnt-btn--dec">
+                                        <i class="shop__qnt-btn-icon fas fa-minus"></i>
+                                    </button>
+                                    <input type="text" class="soluong shop__qnt-input" title="Soluong" value="1" maxlength="12" max="@Model.SoLuong" id="soluong" name="soluong">
+                                    <button onClick="var result = document.getElementById('soluong'); var soluong = result.value; if (!isNaN(soluong) && soluong < @Model.SoLuong) result.value++; return false;" class="shop__qnt-btn shop__qnt-btn--inc">
+                                        <i class="shop__qnt-btn-icon fas fa-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="product__qnt-note">
+                                    <span class="product__qnt-note-num">@Model.SoLuong</span>
+                                    sản phẩm có sẵn
+                                </div>
+                            </div>
+
+                            <div class="product-btns-main">
+
+                                <button class="product-btn-main product-btn-main__msg clear-btn hide-on-tablet">
+                                    <i class="product-btn-main__msg-icon far fa-comment-dots"></i>
+                                </button>
+                                <button type="button" class="add-cart product-btn-main product-btn-main__adding" data-id="@Model.MaHangHoa">
+                                    <i class="product-btn-main__adding-icon fas fa-cart-plus"></i>
+                                    <span class="product-btn-main__text product-btn-main__adding-text hide-on-mobile">Thêm Vào Giỏ Hàng</span>
+                                </button>
+                                <button type="submit" class="product-btn-main product-btn-main__buying">
+                                    <span class="product-btn-main__text product-btn-main__buying-text">
+                                        Mua
+                                        Ngay
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="product__guarantee-container">
+                        <a href="*" class="product__guarantee">
+                            <div class="product__guarantee-wrapper">
+                                <span>
+                                    <i class="product__guarantee-icon fas fa-clipboard-check"></i>
+                                </span>
+                                <div class="product__guarantee-text">SBCode Sẽ Đảm Bảo</div>
+                            </div>
+                            <span class="product__guarantee-note">3 Ngày Trả Hàng / Hoàn Tiền</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid wide">
+        <!-- Product shop -->
+        <div class="row sm-gutter product-shop">
+            <div class="product-shop__contact">
+                <a href="#" class="product-shop__contact-img-link">
+                    <div class="product-shop__contact-avatar-wrapper">
+                        <img class="product-shop__contact-avatar" src="~/images/shop_manager.png">
+                    </div>
+                    <span class="label-loving">Yêu Thích</span>
+                </a>
+
+                <div class="product-shop__contact-container">
+                    <div class="product-shop__contact-info">
+                        <div class="product-shop__contact-name">@ViewBag.Tenadmin</div>
+                        @*<div class="product-shop__contact-online-time">@User.Identity.IsAuthenticated</div>*@
+                    </div>
+
+                    <div class="product-shop__contact-main">
+                        <button class="product-shop__contact-btn product-shop__contact-message-btn hide-on-mobile">
+                            <i class="product-shop__contact-icon far fa-comment-alt"></i>
+                            <span class="product-shop__contact-message-text">Chat Ngay</span>
+                        </button>
+
+                        <a asp-action="Index" asp-controller="HangHoa" class="product-shop__contact-btn product-shop__contact-viewing">
+                            <i class="product-shop__contact-icon fas fa-store"></i>
+                            <div class="product-shop__contact-viewing-text">Xem Shop</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-shop__side hide-on-mobile-tablet">
+                <div class="product-shop__side-container">
+                    <div class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Đánh giá</label>
+                        <div class="product-shop__side-qnt">220</div>
+                    </div>
+
+                    <a href="#" class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Sản phẩm</label>
+                        <div href="#" class="product-shop__side-qnt product-shop__side-qnt--link">12</div>
+                    </a>
+                </div>
+
+                <div class="product-shop__side-container">
+                    <div class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Tỉ Lệ Phản Hồi</label>
+                        <div class="product-shop__side-qnt">95%</div>
+                    </div>
+
+                    <div class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Thời Gian Phản Hồi</label>
+                        <div class="product-shop__side-qnt">trong vài phút</div>
+                    </div>
+                </div>
+
+                <div class="product-shop__side-container">
+                    <div class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Tham gia</label>
+                        <div class="product-shop__side-qnt">6 tháng trước</div>
+                    </div>
+
+                    <div class="product-shop__side-wrapper">
+                        <label class="product-shop__side-label">Người theo dõi</label>
+                        <div class="product-shop__side-qnt">1.5k</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product shop slide on mobile -->
+            <div class="product-shop__side-mobile">
+                <div class="product-shop__side-wrapper">
+                    <label class="product-shop__side-label">Đánh giá</label>
+                    <div class="product-shop__side-qnt">220</div>
+                </div>
+
+                <a href="#" class="product-shop__side-wrapper">
+                    <label class="product-shop__side-label">Sản phẩm</label>
+                    <div href="#" class="product-shop__side-qnt product-shop__side-qnt--link">12</div>
+                </a>
+
+                <div class="product-shop__side-wrapper">
+                    <label class="product-shop__side-label">Tỉ Lệ Phản Hồi</label>
+                    <div class="product-shop__side-qnt">95%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid wide">
+        <div class="row sm-gutter product-content__side" style="padding-bottom: 25px;">
+            <!-- Product left content -->
+            <div class="product-content--left">
+                <!-- Product details -->
+                <div class="product-details">
+                    <div class="product-detail">
+                        <div class="product-detail__title">Chi tiết sản phẩm</div>
+                        <div class="product-details__wrapper">
+                            <div class="product-detail__wrapper">
+                                <span class="product-detail__label">Danh Mục</span>
+                                <div class="product-detail__links">
+                                    <a class="product-detail__link" href="/">
+                                        <span>SBCode-Shop</span>
+                                    </a>
+                                    <svg class="product-detail__icon" enable-background="new 0 0 11 11"
+                                         viewBox="0 0 11 11" x="0" y="0"
+                                         class="shopee-svg-icon _3kIvpP icon-arrow-right">
+                                        <path d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
+                                        </path>
+                                    </svg>
+                                    <a class="product-detail__link" href="/HangHoa/Index/?mucloai=@Model.Loai.MaLoaiCha">
+                                        <span>@Model.Loai.LoaiCha.TenLoai</span>
+                                    </a>
+                                    <svg class="product-detail__icon" enable-background="new 0 0 11 11"
+                                         viewBox="0 0 11 11" x="0" y="0"
+                                         class="shopee-svg-icon _3kIvpP icon-arrow-right">
+                                        <path d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
+                                        </path>
+                                    </svg>
+                                    <a class="product-detail__link" href="/HangHoa/Index/?mucloai=@Model.Loai.MaLoai">
+                                        <span>@Model.Loai.TenLoai</span>
+                                    </a>
+
+                                    <svg class="product-detail__icon" enable-background="new 0 0 11 11"
+                                         viewBox="0 0 11 11" x="0" y="0"
+                                         class="shopee-svg-icon _3kIvpP icon-arrow-right">
+                                        <path d="m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z">
+                                        </path>
+                                    </svg>
+                                    <a class="product-detail__link" href="#">
+                                        <span>@Model.TenHh</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="product-detail__wrapper">
+                                <span class="product-detail__label">Thương hiệu</span>
+                                <a class="product-detail__link" href="/">
+                                    <span>@Model.ThuongHieu</span>
+                                </a>
+                            </div>
+
+                            <div class="product-detail__wrapper">
+                                <span class="product-detail__label">Chất liệu</span>
+                                <span class="product-detail__text">@Model.MoTa</span>
+                            </div>
+
+                            <div class="product-detail__wrapper">
+                                <span class="product-detail__label">Xuất xứ</span>
+                                <span class="product-detail__text">@Model.XuatXu</span>
+                            </div>
+                            <div class="product-detail__wrapper">
+                                <span class="product-detail__label">Gửi từ</span>
+                                <span class="product-detail__text">@ViewBag.NoiGui</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-description">
+                        <div class="product-description__title">Mô tả sản phẩm</div>
+                        <span class="product-description__content">
+                            @Html.Raw(Model.ChiTiet)
+                            @*
+        <span class="dots"> ...</span><span class="text-more hidden">*@
+                        </span>
+                        
+                        <button class="read-more-btn clear-btn">
+                            <span class="read-more-btn__text">Xem thêm</span>
+                            <span class="read-more-btn__icon--down">
+                                <i class="read-more-btn__icon fas fa-angle-down"></i>
+                            </span>
+                            <span class="read-more-btn__icon--up hidden">
+                                <i class="read-more-btn__icon fas fa-angle-up"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product reviews -->
+                <div class="product-reviews">
+                    <div class="product-reviews__header">ĐÁNH GIÁ SẢN PHẨM</div>
+                    <!-- Stars on mobile -->
+                    <div class="product-reviews__rating-mobile">
+                        <div class="product-reviews__rating-stars product-reviews__rating-stars-mobile">
+                            <i class="product-reviews__rating-star fas fa-star"></i>
+                            <i class="product-reviews__rating-star fas fa-star"></i>
+                            <i class="product-reviews__rating-star fas fa-star"></i>
+                            <i class="product-reviews__rating-star fas fa-star"></i>
+                            <i class="product-reviews__rating-star fas fa-star"></i>
+                        </div>
+                        <div class="product-reviews__rating-score-wrapper">
+                            <span class="product-reviews__rating-score">4.9</span><span class="product-reviews__rating-score-out-of">/5</span>
+                        </div>
+                        <div class="product-reviews__total">(44 đánh giá)</div>
+                    </div>
+
+                    <div class="product-reviews__container hide-on-mobile">
+                        <div class="product-reviews__rating">
+                            <div class="product-reviews__rating-score-wrapper">
+                                <span class="product-reviews__rating-score">4.9</span>
+                                <span class="product-reviews__rating-score-out-of"> trên 5 </span>
+                            </div>
+
+                            <div class="product-reviews__rating-stars">
+                                <i class="product-reviews__rating-star fas fa-star"></i>
+                                <i class="product-reviews__rating-star fas fa-star"></i>
+                                <i class="product-reviews__rating-star fas fa-star"></i>
+                                <i class="product-reviews__rating-star fas fa-star"></i>
+                                <i class="product-reviews__rating-star fas fa-star"></i>
+                            </div>
+                        </div>
+
+                        <div class="product-reviews__filters">
+                            <div class="product-reviews__filter product-reviews__filter--active">tất cả</div>
+                            <div class="product-reviews__filter">5 Sao (0)</div>
+                            <div class="product-reviews__filter">4 Sao (0)</div>
+                            <div class="product-reviews__filter">3 Sao (0)</div>
+                            <div class="product-reviews__filter">2 Sao (0)</div>
+                            <div class="product-reviews__filter">1 Sao (0)</div>
+                            <div class="product-reviews__filter product-reviews__filter--comment">
+                                Có Bình luận
+                                (0)
+                            </div>
+                            <div class="product-reviews__filter product-reviews__filter--photo">
+                                Có hình ảnh /
+                                video (0)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-reviews__comments">
+                        <!--Load FB-->
+                        <div id="fb-root"></div>
+                        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v11.0" nonce="uk2E8WlG"></script>
+                        <!-- Your embedded comments code -->
+                        <div class="fb-comments" data-href="https://www.facebook.com/ucv0411/" data-width="100%" style="width:100%" data-numposts="1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-content--right hide-on-mobile-tablet">
+                <!-- Product vouchers -->
+                @*<div class="product-vouchers hide-on-mobile">
+                        <div class="product-vouchers__header">Mã giảm giá của Shop</div>
+                        <div class="product-vouchers__list">
+                            <div class="product-vouchers__item">
+                                <div class="product-vouchers__item-wrapper">
+                                    <div class="product-vouchers__item-title">Giảm ₫3k Đơn Tối Thiểu ₫89k</div>
+                                    <div class="product-vouchers__item-expiry">HSD:31-03-2021</div>
+                                </div>
+                                <div class="product-vouchers__btn-wrapper">
+                                    <button class="product-vouchers__btn-save">Lưu</button>
+                                    <div class="product-vouchers__border-dashed"></div>
+                                </div>
+                                <div class="product-vouchers__border-circle">
+                                    <div class="product-vouchers__border-circle-edge"></div>
+                                </div>
+                            </div>
+
+                            <div class="product-vouchers__item">
+                                <div class="product-vouchers__item-wrapper">
+                                    <div class="product-vouchers__item-title">Giảm ₫3k Đơn Tối Thiểu ₫89k</div>
+                                    <div class="product-vouchers__item-expiry">HSD:31-03-2021</div>
+                                </div>
+                                <div class="product-vouchers__btn-wrapper">
+                                    <button class="product-vouchers__btn-save">Lưu</button>
+                                    <div class="product-vouchers__border-dashed"></div>
+                                </div>
+                                <div class="product-vouchers__border-circle">
+                                    <div class="product-vouchers__border-circle-edge"></div>
+                                </div>
+                            </div>
+
+                            <div class="product-vouchers__item">
+                                <div class="product-vouchers__item-wrapper">
+                                    <div class="product-vouchers__item-title">Giảm ₫3k Đơn Tối Thiểu ₫89k</div>
+                                    <div class="product-vouchers__item-expiry">HSD:31-03-2021</div>
+                                </div>
+                                <div class="product-vouchers__btn-wrapper">
+                                    <button class="product-vouchers__btn-save">Lưu</button>
+                                    <div class="product-vouchers__border-dashed"></div>
+                                </div>
+                                <div class="product-vouchers__border-circle">
+                                    <div class="product-vouchers__border-circle-edge"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+                <!-- Product hot sales -->
+                <div class="product-hot-sales hide-on-mobile-tablet">
+                    <div class="product-hot-sales__header">Sản Phẩm Khác Cùng Loại</div>
+                    @foreach (var spcungloai in ViewData["spcungloai"] as IList<HangHoa>)
+                    {
+                        <a asp-controller="HangHoa" asp-action="Detail" asp-route-id="@spcungloai.MaHangHoa" class="product-hot-sales__link">
+                            <div>
+                                <img style="max-width:100%" class="product-hot-sales__item-img"
+                                     src="~/Hinh/HangHoa/@spcungloai.Hinh">
+                            </div>
+                            <div class="product-hot-sales__item-wrapper">
+                                <div class="product-hot-sales__item-name">@spcungloai.TenHh</div>
+                                <div class="product-hot-sales__item-price">@((spcungloai.DonGia * (100 - spcungloai.GiamGia) / 100.0).ToVnd())</div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function () {
+            $(".add-cart").click(function () {
+                $.ajax({
+                    url: "/GioHang/ThemVaoGio",
+                    data: {
+                        id: $(this).data("id"),
+                        soluong: document.getElementById("soluong").value,
+                        addType: "ajax"
+                    },
+                    success: function (res) {
+                        //update cart
+                        $("#header__cart-list").html(res);
+                        Swal.fire({
+                            title: 'Thêm giỏ hàng thành công.',
+                            text: "Chuyển tới trang giỏ hàng?",
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Đồng ý',
+                            cancelButtonText: 'Ở lại'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/GioHang";
+                            }
+                            else { window.location.href = "/HangHoa/Detail/@Model.MaHangHoa"; }
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+}
+
